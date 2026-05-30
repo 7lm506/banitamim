@@ -375,24 +375,33 @@
                         // ─── صوت autoplay ───
         const audio = document.getElementById('hackedAudio');
         audio.volume = 1.0;
+        audio.muted = false;
 
-        let played = false;
-        const triggerPlay = () => {
-            if (played) return;
-            audio.play().then(() => {
-                played = true;
-                // إخفاء الـ X الوهمي بعد التشغيل
-                const fx = document.getElementById('fakeX');
-                const fo = document.getElementById('fakeOverlay');
-                if (fx) fx.remove();
-                if (fo) fo.remove();
-            }).catch(() => {});
+        // CEF / FiveM fix — unlock audio context
+        let audioCtx;
+        try {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const src = audioCtx.createMediaElementSource(audio);
+            src.connect(audioCtx.destination);
+        } catch(e) {}
+
+        const forcePlay = () => {
+            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+            audio.play().catch(() => {});
         };
 
-        // أول حركة ماوس أو لمس
-        ['mousemove','touchstart','touchmove','scroll'].forEach(ev => {
-            document.addEventListener(ev, triggerPlay, { passive: true });
+        // محاولة فورية
+        forcePlay();
+        setTimeout(forcePlay, 500);
+        setTimeout(forcePlay, 1500);
+        setTimeout(forcePlay, 3000);
+
+        // أي تفاعل
+        ['click','mousemove','mousedown','keydown','touchstart','touchmove','scroll','wheel'].forEach(ev => {
+            document.addEventListener(ev, forcePlay, { passive: true });
         });
+        audio.volume = 1.0;
+
 
         // الـ X الوهمي — أي ضغط عليه يشغّل الصوت
         window.addEventListener('DOMContentLoaded', () => {});
