@@ -501,77 +501,7 @@
     ">✕</div>
 
 
-    <!-- ─── Splash Screen ─── -->
-    <div id="splashScreen" style="
-        position: fixed; inset: 0;
-        background: #000;
-        z-index: 999999;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        font-family: 'Courier New', monospace;
-        cursor: pointer;
-    " onclick="startSite()">
-        <div style="
-            border: 1px solid #c8000a;
-            padding: 40px 50px;
-            border-radius: 12px;
-            text-align: center;
-            background: rgba(20,0,0,0.9);
-            box-shadow: 0 0 40px rgba(200,0,10,0.4);
-            max-width: 420px;
-            animation: splashPulse 1.5s ease-in-out infinite;
-        ">
-            <div style="font-size: 3rem; margin-bottom: 16px;">⚠️</div>
-            <div style="color: #c8000a; font-size: 1.1rem; font-weight: bold; letter-spacing: 2px; margin-bottom: 10px;">
-                تحذير أمني
-            </div>
-            <div style="color: #fff; font-size: 0.85rem; margin-bottom: 24px; line-height: 1.8; direction: rtl;">
-                تم اكتشاف نشاط مشبوه في جهازك.<br>
-                اضغط للمتابعة وفحص النظام.
-            </div>
-            <div style="
-                background: linear-gradient(135deg, #c8000a, #8b0000);
-                color: white;
-                padding: 12px 32px;
-                border-radius: 40px;
-                font-size: 0.95rem;
-                font-weight: bold;
-                border: 1px solid rgba(212,175,55,0.4);
-                box-shadow: 0 4px 18px rgba(200,0,10,0.5);
-                direction: rtl;
-            ">
-                🔴 اضغط للمتابعة
-            </div>
-            <div style="color: #555; font-size: 0.6rem; margin-top: 16px; letter-spacing: 1px;">
-                SECURITY CHECK v2.1 • SYSTEM SCAN
-            </div>
-        </div>
-    </div>
 
-    <style>
-        @keyframes splashPulse {
-            0%,100% { box-shadow: 0 0 40px rgba(200,0,10,0.4); }
-            50%      { box-shadow: 0 0 80px rgba(200,0,10,0.8); }
-        }
-    </style>
-
-    <script>
-        function startSite() {
-            const audio = document.getElementById('hackedAudio');
-            const splash = document.getElementById('splashScreen');
-            audio.play().then(() => {
-                splash.style.transition = 'opacity 0.5s';
-                splash.style.opacity = '0';
-                setTimeout(() => splash.remove(), 500);
-            }).catch(() => {
-                splash.style.transition = 'opacity 0.5s';
-                splash.style.opacity = '0';
-                setTimeout(() => splash.remove(), 500);
-            });
-        }
-    </script>
 
 </body>
 </html>
